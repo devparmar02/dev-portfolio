@@ -1,24 +1,32 @@
 import React from 'react';
 import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaPhp, FaAndroid, FaHtml5, FaCss3Alt, FaJs } from 'react-icons/fa';
-import { SiMongodb, SiKotlin } from 'react-icons/si';
+import { SiMongodb, SiKotlin, SiVite, SiTailwindcss, SiRazorpay, SiJsonwebtokens } from 'react-icons/si';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const projects = [
   {
     id: 1,
+    title: "NIVAS – Society Management System",
+    category: "Full-Stack MERN App",
+    description: "Built a comprehensive Full-Stack platform featuring secure RBAC and automated financial workflows. Implemented monthly billing automation using Cron Jobs, integrated Razorpay for digital payments, and developed instant PDF receipt generation. Engineered a real-time visitor tracking and complaint management system.",
+    tech: [
+      <FaReact className="text-cyan-400" title="React.js" />, 
+      <SiVite className="text-purple-400" title="Vite" />,
+      <FaNodeJs className="text-green-500" title="Node.js" />, 
+      <SiMongodb className="text-green-400" title="MongoDB" />,
+      <SiTailwindcss className="text-sky-400" title="Tailwind CSS" />,
+      <SiRazorpay className="text-blue-500" title="Razorpay" />,
+      <SiJsonwebtokens className="text-slate-300" title="JWT" />
+    ],
+    link: "https://github.com/devparmar02/nivas-society-management",
+  },
+  {
+    id: 2,
     title: "Viseas Service Platform",
     category: "Full-Stack Web App",
     description: "A comprehensive travel marketplace built with modern web technologies. Features user authentication, real-time booking management, and a seamless user experience. Implemented responsive design and optimized performance for mobile and desktop users.",
     tech: [<FaReact className="text-cyan-400" />, <FaNodeJs className="text-green-500" />, <SiMongodb className="text-green-400" />],
     link: "https://github.com/devparmar02/service-booking-viseas",
-  },
-  {
-    id: 2,
-    title: "Airline Booking Web App",
-    category: "Web Application",
-    description: "An intuitive flight search and booking system. Designed with a focus on user experience, featuring advanced filtering, real-time availability updates, and secure payment integration. Built with clean, maintainable code.",
-    tech: [<FaPhp className="text-indigo-400" />, <FaJs className="text-yellow-400" />, <FaHtml5 className="text-orange-500" />],
-    link: "https://github.com/devparmar02/airline-booking",
   },
   {
     id: 3,
@@ -27,6 +35,14 @@ const projects = [
     description: "An Android application that automates parking slot allocation for both admins and users. Streamlines parking operations with real-time updates and efficient resource management. Built with modern mobile development practices.",
     tech: [<FaAndroid className="text-green-400" />, <SiKotlin className="text-purple-500" />], 
     link: "https://github.com/devparmar02/parking-management-system",
+  },
+  {
+    id: 4,
+    title: "Airline Booking Web App",
+    category: "Web Application",
+    description: "An intuitive flight search and booking system. Designed with a focus on user experience, featuring advanced filtering, real-time availability updates, and secure payment integration. Built with clean, maintainable code.",
+    tech: [<FaPhp className="text-indigo-400" />, <FaJs className="text-yellow-400" />, <FaHtml5 className="text-orange-500" />],
+    link: "https://github.com/devparmar02/airline-booking",
   }
 ];
 
@@ -40,38 +56,31 @@ const ProjectCard = ({ project, index }) => {
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="relative rounded-2xl overflow-hidden mb-12 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-500/20">
-        {/* Gradient background for card */}
         <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm z-10"></div>
         
-        {/* Content */}
         <div className="p-8 md:p-10 lg:p-12 relative z-20">
           <div className="space-y-4">
-            {/* Category Badge */}
             <div className="inline-block w-fit animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.05}s` }}>
               <span className="px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-amber-500/20 text-amber-400 border border-amber-500/50 group-hover:bg-amber-500/30 transition-colors">
                 {project.category}
               </span>
             </div>
 
-            {/* Title */}
             <h3 className="text-3xl md:text-4xl font-bold text-white font-serif group-hover:text-amber-400 transition-colors duration-300 animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.1}s` }}>
               {project.title}
             </h3>
 
-            {/* Description */}
             <p className="text-gray-300 leading-relaxed text-base md:text-lg group-hover:text-gray-200 transition-colors animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.15}s` }}>
               {project.description}
             </p>
 
-            {/* Tech Stack */}
             <div className="pt-4 flex flex-wrap items-center gap-4 animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.2}s` }}>
               <span className="text-xs text-gray-500 uppercase tracking-widest">Tech Stack:</span>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 flex-wrap">
                 {project.tech.map((icon, idx) => (
                   <span 
                     key={idx} 
-                    className="text-2xl hover:scale-125 hover:text-amber-400 transition-all duration-300 hover:drop-shadow-lg animate-fadeInUp"
-                    title={`Tech ${idx + 1}`}
+                    className="text-2xl hover:scale-125 hover:text-amber-400 transition-all duration-300 hover:drop-shadow-lg"
                     style={{ animationDelay: `${index * 0.15 + 0.25 + (idx * 0.05)}s` }}
                   >
                     {icon}
@@ -80,13 +89,15 @@ const ProjectCard = ({ project, index }) => {
               </div>
             </div>
 
-            {/* CTA Link */}
             <div className="pt-6 animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.3}s` }}>
               <a 
                 href={project.link} 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 px-6 py-2 border-2 border-amber-500 text-amber-400 font-semibold hover:bg-amber-500 hover:text-slate-950 transition-all duration-300 rounded-lg group-hover:gap-4 uppercase tracking-wider text-sm"
               >
-                <FaGithub /> View Code
+                {project.id === 1 ? <FaExternalLinkAlt /> : <FaGithub />} 
+                {project.id === 1 ? "Live Demo" : "View Code"}
               </a>
             </div>
           </div>
@@ -101,44 +112,40 @@ const Projects = () => {
   
   return (
     <section className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 py-32 px-6 relative overflow-hidden" id="projects">
-      {/* Animated background elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full filter blur-3xl animate-blob"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
-        <div className="absolute -top-1/2 right-0 w-96 h-96 bg-amber-700/5 rounded-full filter blur-3xl"></div>
       </div>
 
-      {/* Subtle grid pattern */}
       <div className="absolute inset-0 -z-10 opacity-5" style={{backgroundImage: 'linear-gradient(rgba(217,119,6,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(217,119,6,0.1) 1px, transparent 1px)', backgroundSize: '50px 50px'}}></div>
 
       <div className="max-w-6xl mx-auto relative">
-        {/* Header with enhanced styling */}
         <div ref={headingRef} className="mb-24 animate-fadeInUp">
           <div className="inline-block px-4 py-1 rounded-full border border-amber-500/50 bg-amber-500/10 mb-6">
             <p className="text-amber-400 text-xs font-bold tracking-widest uppercase">Featured Work</p>
           </div>
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-4 font-serif">
-            Our <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">Projects</span>
+            My <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">Portfolio</span>
           </h2>
           <p className="text-xl text-gray-400 font-light max-w-2xl">
-            A showcase of full-stack applications built with modern technologies and best practices
+            A showcase of full-stack applications and mobile solutions engineered for real-world impact.
           </p>
         </div>
 
-        {/* Projects Grid */}
         <div className="space-y-8">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
 
-        {/* CTA Button */}
         <div className="mt-24 text-center animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
           <a 
-            href="#" 
+            href="https://github.com/devparmar02" 
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 border-2 border-amber-500 text-amber-400 font-bold hover:bg-amber-500 hover:text-slate-950 transition-all duration-300 rounded-lg hover:gap-4 uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:shadow-amber-400/50"
           >
-            View All Projects
+            View More on GitHub
             <FaExternalLinkAlt />
           </a>
         </div>
