@@ -31,6 +31,24 @@ const projects = [
   },
   {
     id: 3,
+    title: "UI Generator Agent",
+    category: "AI-Powered Web App",
+    description: "An AI-integrated UI generator that turns natural language into renderable React code using Llama 3-70B and a sophisticated multi-agent pipeline. It guarantees stable, hallucination-free execution through strict runtime guardrails within a dynamic, real-time developer workspace.",
+    tech: [<SiNextdotjs className="text-black dark:text-white" />, <FaReact className="text-cyan-400" />, <SiTailwindcss className="text-teal-400" />],
+    github: "https://github.com/devparmar02/UI-Generator", 
+    demo: "https://ui-generator-gules.vercel.app/"
+  },
+  {
+    id: 4,
+    title: "E-Commerce Dashboard",
+    category: "Frontend Web App",
+    description: "A high-performance, responsive e-commerce platform built with React and Tailwind CSS that delivers a premium shopping experience. It features secure, authentication-based protected routes, real-time cart management via Context API, and seamless product fetching with infinite scrolling and dynamic search.",
+    tech: [<FaReact className="text-cyan-400" />, <SiVite className="text-purple-500" />, <SiTailwindcss className="text-teal-400" />],
+    github: "https://github.com/devparmar02/E-Commerce-Dashboard",
+    demo: "https://e-commerce-dashboard-lovat-three.vercel.app/" 
+  }
+  {
+    id: 5,
     title: "Parking Management System",
     category: "Mobile Application",
     description: "An Android application that automates parking slot allocation for both admins and users. Streamlines parking operations with real-time updates and efficient resource management. Built with modern mobile development practices.",
@@ -38,7 +56,7 @@ const projects = [
     github: "https://github.com/devparmar02/parking-management-system",
   },
   {
-    id: 4,
+    id: 6,
     title: "Airline Booking Web App",
     category: "Web Application",
     description: "An intuitive flight search and booking system. Designed with a focus on user experience, featuring advanced filtering, real-time availability updates, and secure payment integration. Built with clean, maintainable code.",
