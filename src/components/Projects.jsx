@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaAndroid, FaHtml5, FaJs, FaPhp } from 'react-icons/fa';
-import { SiMongodb, SiKotlin, SiVite, SiTailwindcss, SiRazorpay, SiJsonwebtokens } from 'react-icons/si';
+import { SiMongodb, SiKotlin, SiVite, SiTailwindcss, SiRazorpay, SiJsonwebtokens, SiNextdotjs } from 'react-icons/si';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const projects = [
@@ -27,7 +27,7 @@ const projects = [
     title: "UI Generator Agent",
     category: "AI-Powered Web App",
     description: "An AI-integrated UI generator that turns natural language into renderable React code using Llama 3-70B and a sophisticated multi-agent pipeline. It guarantees stable, hallucination-free execution through strict runtime guardrails within a dynamic, real-time developer workspace.",
-    tech: [<SiNextdotjs className="text-black dark:text-white" />, <FaReact className="text-cyan-400" />, <SiTailwindcss className="text-teal-400" />],
+    tech: [<SiNextdotjs className="text-black dark:text-white" title="Next.js" />, <FaReact className="text-cyan-400" title="React" />, <SiTailwindcss className="text-teal-400" title="Tailwind CSS" />],
     github: "https://github.com/devparmar02/UI-Generator", 
     demo: "https://ui-generator-gules.vercel.app/"
   },
@@ -36,7 +36,7 @@ const projects = [
     title: "E-Commerce Dashboard",
     category: "Frontend Web App",
     description: "A high-performance, responsive e-commerce platform built with React and Tailwind CSS that delivers a premium shopping experience. It features secure, authentication-based protected routes, real-time cart management via Context API, and seamless product fetching with infinite scrolling and dynamic search.",
-    tech: [<FaReact className="text-cyan-400" />, <SiVite className="text-purple-500" />, <SiTailwindcss className="text-teal-400" />],
+    tech: [<FaReact className="text-cyan-400" title="React" />, <SiVite className="text-purple-500" title="Vite" />, <SiTailwindcss className="text-teal-400" title="Tailwind CSS" />],
     github: "https://github.com/devparmar02/E-Commerce-Dashboard",
     demo: "https://e-commerce-dashboard-lovat-three.vercel.app/" 
   },
@@ -45,7 +45,7 @@ const projects = [
     title: "Viseas Service Platform",
     category: "Full-Stack Web App",
     description: "A comprehensive travel marketplace built with modern web technologies. Features user authentication, real-time booking management, and a seamless user experience. Implemented responsive design and optimized performance for mobile and desktop users.",
-    tech: [<FaReact className="text-cyan-400" />, <FaNodeJs className="text-green-500" />, <SiMongodb className="text-green-400" />],
+    tech: [<FaReact className="text-cyan-400" title="React" />, <FaNodeJs className="text-green-500" title="Node.js" />, <SiMongodb className="text-green-400" title="MongoDB" />],
     github: "https://github.com/devparmar02/service-booking-viseas",
   },
   {
@@ -53,7 +53,7 @@ const projects = [
     title: "Parking Management System",
     category: "Mobile Application",
     description: "An Android application that automates parking slot allocation for both admins and users. Streamlines parking operations with real-time updates and efficient resource management. Built with modern mobile development practices.",
-    tech: [<FaAndroid className="text-green-400" />, <SiKotlin className="text-purple-500" />], 
+    tech: [<FaAndroid className="text-green-400" title="Android" />, <SiKotlin className="text-purple-500" title="Kotlin" />], 
     github: "https://github.com/devparmar02/parking-management-system",
   },
   {
@@ -61,7 +61,7 @@ const projects = [
     title: "Airline Booking Web App",
     category: "Web Application",
     description: "An intuitive flight search and booking system. Designed with a focus on user experience, featuring advanced filtering, real-time availability updates, and secure payment integration. Built with clean, maintainable code.",
-    tech: [<FaPhp className="text-indigo-400" />, <FaJs className="text-yellow-400" />, <FaHtml5 className="text-orange-500" />],
+    tech: [<FaPhp className="text-indigo-400" title="PHP" />, <FaJs className="text-yellow-400" title="JavaScript" />, <FaHtml5 className="text-orange-500" title="HTML5" />],
     github: "https://github.com/devparmar02/airline-booking",
   }
 ];
@@ -163,7 +163,7 @@ const Projects = () => {
         <div ref={headingRef} className="mb-24 animate-fadeInUp">
           <div className="inline-block px-4 py-1 rounded-full border border-amber-500/50 bg-amber-500/10 mb-6">
             <p className="text-amber-400 text-xs font-bold tracking-widest uppercase">Featured Work</p>
-          </div>
+          .</div>
           <h2 className="text-5xl md:text-7xl font-bold text-white mb-4 font-serif">
             My <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">Portfolio</span>
           </h2>
