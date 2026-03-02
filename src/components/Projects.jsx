@@ -1,94 +1,132 @@
-import React from 'react';
-import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaPhp, FaAndroid, FaHtml5, FaCss3Alt, FaJs } from 'react-icons/fa';
-import { SiMongodb, SiKotlin } from 'react-icons/si';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React, { useEffect, useRef } from 'react';
+import { FaGithub, FaExternalLinkAlt, FaReact, FaNodeJs, FaAndroid, FaHtml5, FaJs, FaPhp } from 'react-icons/fa';
+import { SiMongodb, SiKotlin, SiVite, SiTailwindcss, SiRazorpay, SiJsonwebtokens, SiNextdotjs } from 'react-icons/si';
 
 const projects = [
   {
-    id: 1,
-    title: "Viseas Service Platform",
-    category: "Full-Stack Web App",
-    description: "A comprehensive travel marketplace built with modern web technologies. Features user authentication, real-time booking management, and a seamless user experience. Implemented responsive design and optimized performance for mobile and desktop users.",
-    tech: [<FaReact className="text-cyan-400" />, <FaNodeJs className="text-green-500" />, <SiMongodb className="text-green-400" />],
-    link: "https://github.com/devparmar02/service-booking-viseas",
+    id:1, num:'001', featured:true,
+    title:'NIVAS – Society Management',
+    category:'Full-Stack MERN App',
+    description:'Comprehensive platform featuring secure RBAC and automated financial workflows. Monthly billing automation via Cron Jobs, Razorpay integration, instant PDF receipts, real-time visitor tracking and complaint management.',
+    tech:[{icon:<FaReact/>,color:'#61dafb',label:'React'},{icon:<SiVite/>,color:'#a855f7',label:'Vite'},{icon:<FaNodeJs/>,color:'#68a063',label:'Node.js'},{icon:<SiMongodb/>,color:'#4db33d',label:'MongoDB'},{icon:<SiTailwindcss/>,color:'#38bdf8',label:'Tailwind'},{icon:<SiRazorpay/>,color:'#528ff5',label:'Razorpay'},{icon:<SiJsonwebtokens/>,color:'#e8e4d8',label:'JWT'}],
+    github:'https://github.com/devparmar02/nivas-society-management',
+    demo:'https://nivas-society-management.vercel.app/',
+    accent:'#ff6b2b'
   },
   {
-    id: 2,
-    title: "Airline Booking Web App",
-    category: "Web Application",
-    description: "An intuitive flight search and booking system. Designed with a focus on user experience, featuring advanced filtering, real-time availability updates, and secure payment integration. Built with clean, maintainable code.",
-    tech: [<FaPhp className="text-indigo-400" />, <FaJs className="text-yellow-400" />, <FaHtml5 className="text-orange-500" />],
-    link: "https://github.com/devparmar02/airline-booking",
+    id:2, num:'002',
+    title:'UI Generator Agent',
+    category:'AI-Powered Web App',
+    description:'AI-integrated UI generator that turns natural language into renderable React code using Llama 3-70B and a multi-agent pipeline. Stable, hallucination-free execution through strict runtime guardrails.',
+    tech:[{icon:<SiNextdotjs/>,color:'#e8e4d8',label:'Next.js'},{icon:<FaReact/>,color:'#61dafb',label:'React'},{icon:<SiTailwindcss/>,color:'#38bdf8',label:'Tailwind'}],
+    github:'https://github.com/devparmar02/UI-Generator',
+    demo:'https://ui-generator-gules.vercel.app/',
+    accent:'#7c5cff'
   },
   {
-    id: 3,
-    title: "Parking Management System",
-    category: "Mobile Application",
-    description: "An Android application that automates parking slot allocation for both admins and users. Streamlines parking operations with real-time updates and efficient resource management. Built with modern mobile development practices.",
-    tech: [<FaAndroid className="text-green-400" />, <SiKotlin className="text-purple-500" />], 
-    link: "https://github.com/devparmar02/parking-management-system",
-  }
+    id:3, num:'003',
+    title:'E-Commerce Dashboard',
+    category:'Frontend Web App',
+    description:'High-performance responsive e-commerce platform. Auth-based protected routes, real-time cart via Context API, infinite scrolling and dynamic search.',
+    tech:[{icon:<FaReact/>,color:'#61dafb',label:'React'},{icon:<SiVite/>,color:'#a855f7',label:'Vite'},{icon:<SiTailwindcss/>,color:'#38bdf8',label:'Tailwind'}],
+    github:'https://github.com/devparmar02/E-Commerce-Dashboard',
+    demo:'https://e-commerce-dashboard-lovat-three.vercel.app/',
+    accent:'#f5c842'
+  },
+  {
+    id:4, num:'004',
+    title:'Viseas Service Platform',
+    category:'Full-Stack Web App',
+    description:'Comprehensive travel marketplace with user authentication, real-time booking management, and optimized performance for mobile and desktop users.',
+    tech:[{icon:<FaReact/>,color:'#61dafb',label:'React'},{icon:<FaNodeJs/>,color:'#68a063',label:'Node.js'},{icon:<SiMongodb/>,color:'#4db33d',label:'MongoDB'}],
+    github:'https://github.com/devparmar02/service-booking-viseas',
+    accent:'#ff6b2b'
+  },
+  {
+    id:5, num:'005',
+    title:'Parking Management System',
+    category:'Mobile Application',
+    description:'Android app automating parking slot allocation for admins and users. Real-time updates and efficient resource management with modern mobile dev practices.',
+    tech:[{icon:<FaAndroid/>,color:'#3ddc84',label:'Android'},{icon:<SiKotlin/>,color:'#a855f7',label:'Kotlin'}],
+    github:'https://github.com/devparmar02/parking-management-system',
+    accent:'#7c5cff'
+  },
+  {
+    id:6, num:'006',
+    title:'Airline Booking Web App',
+    category:'Web Application',
+    description:'Intuitive flight search and booking system. Advanced filtering, real-time availability, and secure payment integration with clean, maintainable code.',
+    tech:[{icon:<FaPhp/>,color:'#8892be',label:'PHP'},{icon:<FaJs/>,color:'#f7df1e',label:'JavaScript'},{icon:<FaHtml5/>,color:'#e34f26',label:'HTML5'}],
+    github:'https://github.com/devparmar02/airline-booking',
+    accent:'#f5c842'
+  },
 ];
 
-const ProjectCard = ({ project, index }) => {
-  const cardRef = useScrollAnimation({ threshold: 0.2 });
-  
-  return (
-    <div 
-      ref={cardRef}
-      className="animate-fadeInUp group"
-      style={{ animationDelay: `${index * 0.15}s` }}
-    >
-      <div className="relative rounded-2xl overflow-hidden mb-12 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-500/20">
-        {/* Gradient background for card */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm z-10"></div>
-        
-        {/* Content */}
-        <div className="p-8 md:p-10 lg:p-12 relative z-20">
-          <div className="space-y-4">
-            {/* Category Badge */}
-            <div className="inline-block w-fit animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.05}s` }}>
-              <span className="px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-amber-500/20 text-amber-400 border border-amber-500/50 group-hover:bg-amber-500/30 transition-colors">
-                {project.category}
-              </span>
-            </div>
+const useInView=(opts={})=>{
+  const ref=useRef(null);
+  useEffect(()=>{
+    const el=ref.current;if(!el)return;
+    const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting){el.classList.add('visible');obs.unobserve(el);}},{threshold:opts.threshold||0.08});
+    obs.observe(el);return()=>obs.disconnect();
+  },[]);
+  return ref;
+};
 
-            {/* Title */}
-            <h3 className="text-3xl md:text-4xl font-bold text-white font-serif group-hover:text-amber-400 transition-colors duration-300 animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.1}s` }}>
-              {project.title}
-            </h3>
+const ProjectCard=({project,index})=>{
+  const ref=useInView();
+  return(
+    <div ref={ref} className="reveal" style={{transitionDelay:`${index*0.1}s`,gridColumn:project.featured?'span 2':'span 1'}}>
+      <div style={{
+        height:'100%',
+        background:'#12152a', border:'1px solid #1e2240',
+        padding:project.featured?'3rem':'2.25rem',
+        position:'relative', overflow:'hidden',
+        transition:'all 0.35s',
+      }}
+      onMouseEnter={e=>{e.currentTarget.style.borderColor=project.accent+'66';e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow=`0 20px 60px ${project.accent}18`;}}
+      onMouseLeave={e=>{e.currentTarget.style.borderColor='#1e2240';e.currentTarget.style.transform='';e.currentTarget.style.boxShadow='';}}>
 
-            {/* Description */}
-            <p className="text-gray-300 leading-relaxed text-base md:text-lg group-hover:text-gray-200 transition-colors animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.15}s` }}>
-              {project.description}
-            </p>
+        {/* Top gradient line */}
+        <div style={{position:'absolute',top:0,left:0,right:0,height:2,background:`linear-gradient(90deg,${project.accent},${project.accent}44,transparent)`}} />
+        {/* Bg glow */}
+        <div style={{position:'absolute',top:0,right:0,width:'50%',height:'100%',background:`radial-gradient(ellipse at top right,${project.accent}08,transparent 65%)`,pointerEvents:'none'}} />
 
-            {/* Tech Stack */}
-            <div className="pt-4 flex flex-wrap items-center gap-4 animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.2}s` }}>
-              <span className="text-xs text-gray-500 uppercase tracking-widest">Tech Stack:</span>
-              <div className="flex items-center gap-4">
-                {project.tech.map((icon, idx) => (
-                  <span 
-                    key={idx} 
-                    className="text-2xl hover:scale-125 hover:text-amber-400 transition-all duration-300 hover:drop-shadow-lg animate-fadeInUp"
-                    title={`Tech ${idx + 1}`}
-                    style={{ animationDelay: `${index * 0.15 + 0.25 + (idx * 0.05)}s` }}
-                  >
-                    {icon}
-                  </span>
-                ))}
-              </div>
-            </div>
+        <div style={{position:'relative',zIndex:1}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'1.5rem'}}>
+            <span className="font-mono" style={{fontSize:'0.58rem',color:project.accent,letterSpacing:'0.12em'}}>{project.num}{project.featured?' — FEATURED':''}</span>
+            <span style={{fontFamily:'Space Mono, monospace',fontSize:'0.58rem',padding:'0.18rem 0.55rem',border:`1px solid ${project.accent}44`,color:project.accent,letterSpacing:'0.05em'}}>{project.category}</span>
+          </div>
 
-            {/* CTA Link */}
-            <div className="pt-6 animate-fadeInUp" style={{ animationDelay: `${index * 0.15 + 0.3}s` }}>
-              <a 
-                href={project.link} 
-                className="inline-flex items-center gap-3 px-6 py-2 border-2 border-amber-500 text-amber-400 font-semibold hover:bg-amber-500 hover:text-slate-950 transition-all duration-300 rounded-lg group-hover:gap-4 uppercase tracking-wider text-sm"
-              >
-                <FaGithub /> View Code
-              </a>
-            </div>
+          <h3 style={{fontFamily:'Playfair Display, serif',fontWeight:700,fontSize:project.featured?'1.8rem':'1.2rem',lineHeight:1.15,letterSpacing:'-0.01em',marginBottom:'0.85rem',color:'#e8e4d8'}}>
+            {project.title}
+          </h3>
+          <p style={{fontSize:'0.86rem',color:'#5c607a',lineHeight:1.75,marginBottom:'1.75rem',maxWidth:project.featured?640:'100%'}}>
+            {project.description}
+          </p>
+
+          <div style={{display:'flex',alignItems:'center',gap:'1rem',flexWrap:'wrap',marginBottom:'2rem'}}>
+            {project.tech.map(t=>(
+              <span key={t.label} title={t.label} style={{fontSize:'1.25rem',color:t.color,transition:'transform 0.2s'}}
+                onMouseEnter={e=>e.currentTarget.style.transform='scale(1.3) translateY(-3px)'}
+                onMouseLeave={e=>e.currentTarget.style.transform=''}>{t.icon}</span>
+            ))}
+          </div>
+
+          <div style={{display:'flex',gap:'1.25rem',flexWrap:'wrap'}}>
+            {project.github&&(
+              <a href={project.github} target="_blank" rel="noopener noreferrer"
+                style={{display:'inline-flex',alignItems:'center',gap:'0.45rem',fontFamily:'Space Mono, monospace',fontSize:'0.63rem',letterSpacing:'0.08em',textTransform:'uppercase',color:'#5c607a',textDecoration:'none',transition:'all 0.2s'}}
+                onMouseEnter={e=>{e.currentTarget.style.color='#e8e4d8';e.currentTarget.style.gap='0.8rem';}}
+                onMouseLeave={e=>{e.currentTarget.style.color='#5c607a';e.currentTarget.style.gap='0.45rem';}}
+              ><FaGithub/>GitHub</a>
+            )}
+            {project.demo&&(
+              <a href={project.demo} target="_blank" rel="noopener noreferrer"
+                style={{display:'inline-flex',alignItems:'center',gap:'0.45rem',fontFamily:'Space Mono, monospace',fontSize:'0.63rem',letterSpacing:'0.08em',textTransform:'uppercase',color:project.accent,textDecoration:'none',transition:'gap 0.2s'}}
+                onMouseEnter={e=>e.currentTarget.style.gap='0.8rem'}
+                onMouseLeave={e=>e.currentTarget.style.gap='0.45rem'}
+              ><FaExternalLinkAlt/>Live Demo</a>
+            )}
           </div>
         </div>
       </div>
@@ -96,53 +134,41 @@ const ProjectCard = ({ project, index }) => {
   );
 };
 
-const Projects = () => {
-  const headingRef = useScrollAnimation({ threshold: 0.2 });
-  
-  return (
-    <section className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 py-32 px-6 relative overflow-hidden" id="projects">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full filter blur-3xl animate-blob"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full filter blur-3xl animate-blob animation-delay-4000"></div>
-        <div className="absolute -top-1/2 right-0 w-96 h-96 bg-amber-700/5 rounded-full filter blur-3xl"></div>
-      </div>
+const Projects=()=>{
+  const h=useInView();
+  return(
+    <section id="projects" style={{background:'#0e1020',padding:'9rem 2.5rem',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',top:'5%',left:'10%',width:600,height:600,borderRadius:'50%',background:'radial-gradient(circle,rgba(124,92,255,0.06),transparent 65%)',pointerEvents:'none'}}/>
 
-      {/* Subtle grid pattern */}
-      <div className="absolute inset-0 -z-10 opacity-5" style={{backgroundImage: 'linear-gradient(rgba(217,119,6,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(217,119,6,0.1) 1px, transparent 1px)', backgroundSize: '50px 50px'}}></div>
+      {/* Giant number */}
+      <div style={{position:'absolute',top:'3rem',right:'3rem',fontFamily:'Playfair Display, serif',fontWeight:900,fontSize:'clamp(6rem,14vw,16rem)',color:'rgba(20,24,50,0.7)',lineHeight:1,pointerEvents:'none',userSelect:'none'}}>03</div>
 
-      <div className="max-w-6xl mx-auto relative">
-        {/* Header with enhanced styling */}
-        <div ref={headingRef} className="mb-24 animate-fadeInUp">
-          <div className="inline-block px-4 py-1 rounded-full border border-amber-500/50 bg-amber-500/10 mb-6">
-            <p className="text-amber-400 text-xs font-bold tracking-widest uppercase">Featured Work</p>
+      <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:2}}>
+        <div ref={h} className="reveal" style={{marginBottom:'5rem'}}>
+          <div className="font-mono" style={{fontSize:'0.65rem',color:'#ff6b2b',letterSpacing:'0.25em',textTransform:'uppercase',marginBottom:'1.25rem',display:'flex',alignItems:'center',gap:'0.75rem'}}>
+            <span style={{width:28,height:1,background:'#ff6b2b',display:'inline-block'}}/>03 — Projects
           </div>
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-4 font-serif">
-            Our <span className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent">Projects</span>
+          <h2 style={{fontFamily:'Playfair Display, serif',fontWeight:900,lineHeight:0.9,letterSpacing:'-0.02em',fontSize:'clamp(3rem,5.5vw,6rem)'}}>
+            Selected{' '}
+            <span style={{fontStyle:'italic',background:'linear-gradient(135deg,#ff6b2b,#f5c842)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>work.</span>
           </h2>
-          <p className="text-xl text-gray-400 font-light max-w-2xl">
-            A showcase of full-stack applications built with modern technologies and best practices
-          </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="space-y-8">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:'1.5rem'}}>
+          {projects.map((p,i)=><ProjectCard key={p.id} project={p} index={i}/>)}
         </div>
 
-        {/* CTA Button */}
-        <div className="mt-24 text-center animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
-          <a 
-            href="#" 
-            className="inline-flex items-center gap-3 px-8 py-4 border-2 border-amber-500 text-amber-400 font-bold hover:bg-amber-500 hover:text-slate-950 transition-all duration-300 rounded-lg hover:gap-4 uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:shadow-amber-400/50"
-          >
-            View All Projects
-            <FaExternalLinkAlt />
+        <div style={{marginTop:'3.5rem',textAlign:'center'}}>
+          <a href="https://github.com/devparmar02" target="_blank" rel="noopener noreferrer"
+            style={{display:'inline-flex',alignItems:'center',gap:'0.7rem',fontWeight:700,fontSize:'0.78rem',letterSpacing:'0.08em',textTransform:'uppercase',color:'#5c607a',textDecoration:'none',border:'1px solid #1e2240',padding:'0.9rem 2.2rem',transition:'all 0.25s'}}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(255,107,43,0.45)';e.currentTarget.style.color='#ff6b2b';e.currentTarget.style.transform='translateY(-2px)';}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor='#1e2240';e.currentTarget.style.color='#5c607a';e.currentTarget.style.transform='';}}>
+            <FaGithub/> Explore More on GitHub
           </a>
         </div>
       </div>
+
+      <style>{`@media(max-width:768px){#projects div[style*="grid-template-columns"]{grid-template-columns:1fr !important}#projects div[style*="span 2"]{grid-column:span 1 !important}}`}</style>
     </section>
   );
 };

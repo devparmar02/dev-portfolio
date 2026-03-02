@@ -1,105 +1,125 @@
-import React from 'react';
-import { FaReact, FaHtml5, FaCss3Alt, FaNodeJs, FaPhp, FaGitAlt, FaAndroid, FaFigma, FaPython, FaDatabase, FaJs, FaBook } from 'react-icons/fa';
+import React, { useEffect, useRef } from 'react';
+import { FaReact, FaHtml5, FaCss3Alt, FaNodeJs, FaPhp, FaGitAlt, FaAndroid, FaFigma, FaPython, FaDatabase, FaJs } from 'react-icons/fa';
 import { SiTailwindcss, SiExpress, SiMongodb, SiPostgresql, SiKotlin, SiVite, SiMysql, SiDjango, SiFlask, SiNumpy, SiPandas } from 'react-icons/si';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
-const SkillCategory = ({ title, skills, delay }) => {
-  const categoryRef = useScrollAnimation({ threshold: 0.2 });
-  
-  return (
-    <div 
-      ref={categoryRef}
-      className="mb-12 animate-fadeInUp"
-      style={{ animationDelay: `${delay}s` }}
-    >
-      <h3 className="text-2xl font-bold text-amber-500 mb-6 font-serif">{title}</h3>
-      <div className="flex flex-wrap gap-8">
-        {skills.map((skill, idx) => (
-          <div 
-            key={idx} 
-            className="flex items-center gap-3 text-gray-300 hover:text-amber-400 transition-all duration-300 group p-3 rounded-lg hover:bg-amber-500/10 hover:shadow-lg hover:shadow-amber-500/10 animate-fadeInUp"
-            style={{ animationDelay: `${delay + (idx * 0.05)}s` }}
-            title={skill.name}
-          >
-            <div className="text-3xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300">
-              {skill.icon}
-            </div>
-            <span className="font-medium">{skill.name}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+const categories = [
+  {
+    name: 'Frontend', color:'#ff6b2b',
+    skills:[
+      {name:'React',icon:<FaReact />,color:'#61dafb'},
+      {name:'JavaScript',icon:<FaJs />,color:'#f7df1e'},
+      {name:'Tailwind',icon:<SiTailwindcss />,color:'#38bdf8'},
+      {name:'HTML5',icon:<FaHtml5 />,color:'#e34f26'},
+      {name:'CSS3',icon:<FaCss3Alt />,color:'#264de4'},
+      {name:'Vite',icon:<SiVite />,color:'#a855f7'},
+    ]
+  },
+  {
+    name: 'Backend', color:'#7c5cff',
+    skills:[
+      {name:'Node.js',icon:<FaNodeJs />,color:'#68a063'},
+      {name:'Express',icon:<SiExpress />,color:'#e8e4d8'},
+      {name:'MongoDB',icon:<SiMongodb />,color:'#4db33d'},
+      {name:'MySQL',icon:<SiMysql />,color:'#4479a1'},
+      {name:'PostgreSQL',icon:<SiPostgresql />,color:'#336791'},
+      {name:'PHP',icon:<FaPhp />,color:'#8892be'},
+      {name:'Python',icon:<FaPython />,color:'#3b82f6'},
+    ]
+  },
+  {
+    name: 'Mobile', color:'#f5c842',
+    skills:[
+      {name:'Android',icon:<FaAndroid />,color:'#3ddc84'},
+      {name:'Kotlin',icon:<SiKotlin />,color:'#a855f7'},
+    ]
+  },
+  {
+    name: 'Python Libs', color:'#ff6b2b',
+    skills:[
+      {name:'Django',icon:<SiDjango />,color:'#69ba9f'},
+      {name:'Flask',icon:<SiFlask />,color:'#e8e4d8'},
+      {name:'NumPy',icon:<SiNumpy />,color:'#4b8bbe'},
+      {name:'Pandas',icon:<SiPandas />,color:'#e7008a'},
+      {name:'FastAPI',icon:<FaPython />,color:'#059669'},
+    ]
+  },
+  {
+    name: 'Tools', color:'#7c5cff',
+    skills:[
+      {name:'Git',icon:<FaGitAlt />,color:'#f05032'},
+      {name:'Figma',icon:<FaFigma />,color:'#a259ff'},
+      {name:'Databases',icon:<FaDatabase />,color:'#f5c842'},
+    ]
+  }
+];
+
+const useInView = (opts={}) => {
+  const ref = useRef(null);
+  useEffect(()=>{
+    const el=ref.current;if(!el)return;
+    const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting){el.classList.add('visible');obs.unobserve(el);}},{threshold:opts.threshold||0.1});
+    obs.observe(el);return()=>obs.disconnect();
+  },[]);
+  return ref;
 };
 
+const SkillPill = ({skill}) => (
+  <div style={{
+    display:'flex',alignItems:'center',gap:'0.65rem',
+    padding:'0.7rem 1.2rem',
+    background:'#12152a', border:'1px solid #1e2240',
+    transition:'all 0.25s', position:'relative', overflow:'hidden'
+  }}
+  onMouseEnter={e=>{e.currentTarget.style.borderColor='rgba(255,107,43,0.4)';e.currentTarget.style.background='#181c35';e.currentTarget.style.transform='translateY(-2px)';}}
+  onMouseLeave={e=>{e.currentTarget.style.borderColor='#1e2240';e.currentTarget.style.background='#12152a';e.currentTarget.style.transform='';}}>
+    <span style={{color:skill.color,fontSize:'1.15rem'}}>{skill.icon}</span>
+    <span style={{fontWeight:600,fontSize:'0.82rem',color:'#e8e4d8'}}>{skill.name}</span>
+  </div>
+);
+
 const Skills = () => {
-  const headingRef = useScrollAnimation({ threshold: 0.2 });
-  
-  const frontendSkills = [
-    { name: 'React', icon: <FaReact className="text-cyan-600" /> },
-    { name: 'JavaScript', icon: <FaJs className="text-yellow-500" /> },
-    { name: 'Tailwind CSS', icon: <SiTailwindcss className="text-cyan-500" /> },
-    { name: 'HTML5', icon: <FaHtml5 className="text-orange-500" /> },
-    { name: 'CSS3', icon: <FaCss3Alt className="text-blue-500" /> },
-    { name: 'Vite', icon: <SiVite className="text-purple-500" /> },
-  ];
-
-  const backendSkills = [
-    { name: 'Node.js', icon: <FaNodeJs className="text-green-600" /> },
-    { name: 'Express', icon: <SiExpress className="text-gray-700" /> },
-    { name: 'MongoDB', icon: <SiMongodb className="text-green-500" /> },
-    { name: 'MySQL', icon: <SiMysql className="text-blue-600" /> },
-    { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-700" /> },
-    { name: 'PHP', icon: <FaPhp className="text-indigo-600" /> },
-    { name: 'Python', icon: <FaPython className="text-blue-500" /> },
-  ];
-
-  const mobileSkills = [
-    { name: 'Android Studio', icon: <FaAndroid className="text-green-500" /> },
-    { name: 'Kotlin', icon: <SiKotlin className="text-purple-600" /> },
-    { name: 'Java', icon: <FaAndroid className="text-orange-600" /> },
-  ];
-
-  const toolsSkills = [
-    { name: 'Git', icon: <FaGitAlt className="text-red-600" /> },
-    { name: 'Figma', icon: <FaFigma className="text-purple-500" /> },
-    { name: 'Database Design', icon: <FaDatabase className="text-yellow-600" /> },
-  ];
-
-  const pythonSkills = [
-    { name: 'Django', icon: <SiDjango className="text-green-700" /> },
-    { name: 'Flask', icon: <SiFlask className="text-gray-600" /> },
-    { name: 'NumPy', icon: <SiNumpy className="text-blue-500" /> },
-    { name: 'Pandas', icon: <SiPandas className="text-blue-700" /> },
-    { name: 'FastAPI', icon: <FaPython className="text-yellow-600" /> },
-    { name: 'Requests', icon: <FaBook className="text-blue-400" /> },
-  ];
+  const h = useInView();
 
   return (
-    <section className="bg-gradient-to-b from-slate-950 to-slate-900 py-20 px-6 relative overflow-hidden" id="skills">
-      {/* Background elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-amber-600/10 rounded-full filter blur-3xl"></div>
-      </div>
+    <section id="skills" style={{background:'#07080f',padding:'9rem 2.5rem',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',bottom:'10%',right:'10%',width:450,height:450,borderRadius:'50%',background:'radial-gradient(circle,rgba(255,107,43,0.07),transparent 65%)',pointerEvents:'none'}} />
 
-      <div className="max-w-5xl mx-auto relative">
-        <div ref={headingRef} className="mb-16 animate-fadeInUp">
-          <div className="inline-block px-4 py-1 rounded-full border border-amber-500/50 bg-amber-500/10 mb-6">
-            <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase">My Expertise</p>
+      {/* Giant chapter number */}
+      <div style={{position:'absolute',top:'3rem',right:'3rem',fontFamily:'Playfair Display, serif',fontWeight:900,fontSize:'clamp(6rem,14vw,16rem)',color:'rgba(20,24,50,0.8)',lineHeight:1,pointerEvents:'none',userSelect:'none'}}>02</div>
+
+      <div style={{maxWidth:1100,margin:'0 auto',position:'relative',zIndex:2}}>
+        <div ref={h} className="reveal" style={{marginBottom:'5rem'}}>
+          <div className="font-mono" style={{fontSize:'0.65rem',color:'#ff6b2b',letterSpacing:'0.25em',textTransform:'uppercase',marginBottom:'1.25rem',display:'flex',alignItems:'center',gap:'0.75rem'}}>
+            <span style={{width:28,height:1,background:'#ff6b2b',display:'inline-block'}}/>02 — Skills
           </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-4 font-serif">Skills</h2>
-          <p className="text-xl text-amber-500 font-light tracking-wide">Technologies and tools I work with</p>
+          <h2 style={{fontFamily:'Playfair Display, serif',fontWeight:900,lineHeight:0.9,letterSpacing:'-0.02em',fontSize:'clamp(3rem,5.5vw,6rem)'}}>
+            What I{' '}
+            <span style={{fontStyle:'italic',background:'linear-gradient(135deg,#7c5cff,#ff6b2b)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>work with.</span>
+          </h2>
         </div>
 
-        <SkillCategory title="Frontend" skills={frontendSkills} delay={0.1} />
-        <SkillCategory title="Backend" skills={backendSkills} delay={0.2} />
-        <SkillCategory title="Mobile Development" skills={mobileSkills} delay={0.3} />
-        <SkillCategory title="Python Libraries" skills={pythonSkills} delay={0.4} />
-        <SkillCategory title="Tools & Design" skills={toolsSkills} delay={0.5} />
+        <div style={{display:'flex',flexDirection:'column',gap:'3.5rem'}}>
+          {categories.map((cat,ci)=>{
+            const ref=useInView({threshold:0.08});
+            return (
+              <div key={cat.name} ref={ref} className="reveal" style={{transitionDelay:`${ci*0.1}s`}}>
+                <div style={{display:'flex',alignItems:'center',gap:'1rem',marginBottom:'1.25rem'}}>
+                  <span style={{fontFamily:'Space Mono, monospace',fontSize:'0.62rem',color:cat.color,letterSpacing:'0.2em',textTransform:'uppercase'}}>{cat.name}</span>
+                  <div style={{flex:1,height:1,background:`linear-gradient(90deg, ${cat.color}40, transparent)`}} />
+                </div>
+                <div style={{display:'flex',flexWrap:'wrap',gap:'0.65rem'}}>
+                  {cat.skills.map(s=><SkillPill key={s.name} skill={s}/>)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-        <div className="mt-20 pt-12 border-t border-amber-700/20 animate-fadeInUp" style={{ animationDelay: '0.6s' }}>
-          <p className="text-lg text-gray-300 leading-relaxed">
-            Full-stack developer with expertise in <span className="font-semibold text-amber-500">web and mobile development</span>. Proficient in both frontend and backend technologies, with hands-on experience in building scalable applications using modern frameworks and databases.
+        {/* Summary */}
+        <div style={{marginTop:'5rem',padding:'2.5rem',background:'linear-gradient(135deg,#12152a,#0e1020)',border:'1px solid #1e2240',borderTop:'2px solid #ff6b2b',position:'relative',overflow:'hidden'}}>
+          <div style={{position:'absolute',top:0,right:0,bottom:0,width:'30%',background:'radial-gradient(ellipse at right,rgba(124,92,255,0.08),transparent 70%)'}}/>
+          <p style={{fontSize:'1rem',color:'#5c607a',lineHeight:1.8}}>
+            Full-stack developer with expertise in <span style={{color:'#ff6b2b',fontWeight:600}}>web and mobile development</span>. Proficient in both frontend and backend, with hands-on experience building scalable applications using modern frameworks and databases.
           </p>
         </div>
       </div>

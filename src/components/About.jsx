@@ -1,111 +1,101 @@
-import React, { useState } from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React, { useState, useEffect, useRef } from 'react';
+
+const milestones = [
+  { id:0, year:'2019', title:'Secondary School (10th)', sub:'State Board', desc:'Built strong foundations in Science and Mathematics.' },
+  { id:1, year:'2021', title:'Higher Secondary (12th)', sub:'Science Stream', desc:'Specialized in Physics, Chemistry, and Mathematics.' },
+  { id:2, year:'2027', title:'B.Tech Information Technology', sub:'ITM SLS Baroda University', desc:'Pursuing degree with focus on Full Stack Development and emerging technologies.' },
+  { id:3, year:'Now', title:'Internship & Projects', sub:'Building production-grade apps', desc:'Developing real-world applications and expanding professional experience.' },
+];
+
+const useInView = (opts = {}) => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const cls = opts.cls || 'visible';
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add(cls); obs.unobserve(el); } }, { threshold: opts.threshold || 0.1 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return ref;
+};
 
 const About = () => {
-  const [activeStep, setActiveStep] = useState(2);
-  const headingRef = useScrollAnimation({ threshold: 0.2 });
-  const contentRef = useScrollAnimation({ threshold: 0.15 });
-
-  const milestones = [
-    { 
-      id: 0, 
-      title: "Secondary School (10th)", 
-      institution: "State Board",
-      date: "2019", 
-      description: "Built strong foundations in Science and Mathematics." 
-    },
-    { 
-      id: 1, 
-      title: "Higher Secondary (12th)", 
-      institution: "Science Stream",
-      date: "2021", 
-      description: "Specialized in Physics, Chemistry, and Mathematics." 
-    },
-    { 
-      id: 2, 
-      title: "B.Tech Information Technology", 
-      institution: "ITM SLS Baroda University", 
-      date: "2027 (Expected)", 
-      description: "Pursuing degree with focus on Full Stack Development and emerging technologies." 
-    },
-    { 
-      id: 3, 
-      title: "Internship & Projects", 
-      date: "Present",
-      description: "Building production-grade applications and expanding my professional experience."
-    }
-  ];
+  const [active, setActive] = useState(2);
+  const h = useInView();
+  const left = useInView({ cls:'visible' });
+  const right = useInView({ cls:'visible' });
 
   return (
-    <section className="bg-gradient-to-b from-slate-900 to-slate-950 py-20 px-6 relative overflow-hidden" id="about">
-      {/* Background decoration */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-1/3 w-96 h-96 bg-amber-600/10 rounded-full filter blur-3xl"></div>
-      </div>
+    <section id="about" style={{ background:'#0e1020', padding:'9rem 2.5rem', position:'relative', overflow:'hidden' }}>
+      {/* Decorative elements */}
+      <div style={{ position:'absolute', top:0, right:'15%', width:500, height:500, borderRadius:'50%', background:'radial-gradient(circle,rgba(124,92,255,0.08),transparent 65%)', pointerEvents:'none' }} />
+      <div style={{ position:'absolute', bottom:'5%', left:'-5%', width:350, height:350, borderRadius:'50%', background:'radial-gradient(circle,rgba(255,107,43,0.06),transparent 65%)', pointerEvents:'none' }} />
 
-      <div className="max-w-5xl mx-auto relative">
-        
-        {/* Header */}
-        <div ref={headingRef} className="mb-20 animate-fadeInUp">
-          <div className="inline-block px-4 py-1 rounded-full border border-amber-500/50 bg-amber-500/10 mb-6">
-            <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase">Who I Am</p>
+      {/* Giant chapter number */}
+      <div style={{ position:'absolute', top:'3rem', right:'3rem', fontFamily:'Playfair Display, serif', fontWeight:900, fontSize:'clamp(6rem,14vw,16rem)', color:'rgba(30,34,64,0.6)', lineHeight:1, pointerEvents:'none', userSelect:'none' }}>01</div>
+
+      <div style={{ maxWidth:1100, margin:'0 auto', position:'relative', zIndex:2 }}>
+        <div ref={h} className="reveal" style={{ marginBottom:'5rem' }}>
+          <div className="font-mono" style={{ fontSize:'0.65rem', color:'#ff6b2b', letterSpacing:'0.25em', textTransform:'uppercase', marginBottom:'1.25rem', display:'flex', alignItems:'center', gap:'0.75rem' }}>
+            <span style={{ width:28, height:1, background:'#ff6b2b', display:'inline-block' }} />01 — About
           </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-4 font-serif">About</h2>
-          <p className="text-xl text-amber-500 font-light tracking-wide">My journey and background</p>
+          <h2 style={{ fontFamily:'Playfair Display, serif', fontWeight:900, lineHeight:0.9, letterSpacing:'-0.02em', fontSize:'clamp(3rem,5.5vw,6rem)' }}>
+            Who{' '}
+            <span style={{ fontStyle:'italic', background:'linear-gradient(135deg,#ff6b2b,#f5c842)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>I am.</span>
+          </h2>
         </div>
 
-        {/* Main Content */}
-        <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-          
-          {/* Left: Bio */}
-          <div className="space-y-6">
-            <p className="text-lg text-gray-300 leading-relaxed">
-              I'm a full-stack developer driven by a simple philosophy: <span className="font-semibold text-amber-500">"Code is a tool; solving the problem is the goal."</span>
-            </p>
-            
-            <p className="text-lg text-gray-300 leading-relaxed">
-              My technical journey is defined by <span className="font-semibold text-amber-500">constant learning</span>. Whether it's solving algorithmic problems or diving deep into emerging technologies, I'm always upgrading my skills.
-            </p>
-
-            <p className="text-lg text-gray-300 leading-relaxed">
-              Currently finalizing my B.Tech while mastering Full Stack Development and building real-world applications that demonstrate my ability to turn complex ideas into working products.
-            </p>
-
-            <p className="text-lg text-gray-300 leading-relaxed">
-              When I'm not coding, I enjoy exploring new technologies, contributing to open source, and staying updated with industry trends.
-            </p>
+        {/* Scrollytelling layout */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'6rem', alignItems:'start' }}>
+          {/* Bio - sticky */}
+          <div ref={left} className="reveal-left" style={{ position:'sticky', top:'20vh' }}>
+            <div style={{ padding:'2.5rem', background:'#12152a', border:'1px solid #1e2240', borderLeft:'3px solid #ff6b2b', marginBottom:'2rem' }}>
+              <p style={{ fontFamily:'Playfair Display, serif', fontSize:'1.35rem', fontStyle:'italic', color:'#e8e4d8', lineHeight:1.5, marginBottom:'1rem' }}>
+                "Code is a tool; solving the problem is the goal."
+              </p>
+              <div style={{ width:40, height:1, background:'#ff6b2b' }} />
+            </div>
+            {[
+              <>I'm a <strong style={{color:'#e8e4d8'}}>full-stack developer</strong> driven by clean architecture and delightful UX. My journey spans MERN stack apps, AI-powered tools, mobile dev with Kotlin, and data engineering.</>,
+              <>Currently finalizing my B.Tech in IT while shipping production-grade applications that turn complex ideas into working, polished products.</>,
+              <>When not coding, I explore new tech, contribute to open source, and stay sharp on industry trends.</>,
+            ].map((t,i) => (
+              <p key={i} style={{ fontSize:'0.93rem', color:'#5c607a', lineHeight:1.85, marginBottom:'1rem' }}>{t}</p>
+            ))}
           </div>
 
-          {/* Right: Timeline */}
-          <div>
-            <div className="space-y-6">
-              {milestones.map((milestone, index) => (
-                <div 
-                  key={milestone.id}
-                  onClick={() => setActiveStep(index)}
-                  className={`p-6 rounded-lg border transition-all duration-500 cursor-pointer transform hover:scale-105 animate-fadeInUp ${
-                    index === activeStep
-                      ? 'bg-gradient-to-br from-amber-500/20 to-amber-600/10 border-amber-500 shadow-lg shadow-amber-500/20'
-                      : 'border-amber-700/20 hover:border-amber-600/40 bg-slate-800/50 hover:bg-slate-800/80'
-                  }`}
-                  style={{ animationDelay: `${0.2 + (index * 0.1)}s` }}
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-lg font-bold text-amber-500 font-serif">{milestone.title}</h3>
-                      {milestone.institution && (
-                        <p className="text-gray-400 text-sm mt-1">{milestone.institution}</p>
-                      )}
-                      <p className="text-gray-500 text-sm mt-2">{milestone.date}</p>
-                    </div>
-                    <div className={`w-4 h-4 rounded-full border-2 mt-1 flex-shrink-0 transition-all duration-300 ${
-                      index <= activeStep
-                        ? 'bg-amber-500 border-amber-500 scale-125'
-                        : 'border-amber-700/40 bg-slate-800'
-                    }`} />
-                  </div>
-                  {index === activeStep && (
-                    <p className="text-gray-300 mt-4 text-sm animate-fadeInUp" style={{ animationDelay: '0.1s' }}>{milestone.description}</p>
+          {/* Timeline */}
+          <div ref={right} className="reveal-right">
+            <div style={{ position:'relative' }}>
+              {/* Vertical line */}
+              <div style={{ position:'absolute', left:20, top:0, bottom:0, width:1, background:'linear-gradient(to bottom, #ff6b2b, #7c5cff, transparent)' }} />
+
+              {milestones.map((m,i) => (
+                <div key={m.id} onClick={() => setActive(i)}
+                  style={{
+                    marginLeft:52, marginBottom: i < milestones.length-1 ? '2rem' : 0,
+                    padding:'1.5rem 1.75rem',
+                    background: active===i ? '#12152a' : 'transparent',
+                    border: active===i ? '1px solid #1e2240' : '1px solid transparent',
+                    borderLeft: active===i ? '2px solid #ff6b2b' : '2px solid transparent',
+                    cursor:'none', transition:'all 0.35s',
+                    position:'relative'
+                  }}>
+                  {/* Dot */}
+                  <div style={{
+                    position:'absolute', left:-44, top:'1.5rem',
+                    width:16, height:16, borderRadius:'50%',
+                    background: i<=active ? 'linear-gradient(135deg,#ff6b2b,#f5c842)' : '#12152a',
+                    border:'2px solid', borderColor: i<=active ? '#ff6b2b' : '#1e2240',
+                    transition:'all 0.35s',
+                    boxShadow: i===active ? '0 0 12px rgba(255,107,43,0.5)' : 'none'
+                  }} />
+
+                  <div className="font-mono" style={{ fontSize:'0.62rem', color: active===i ? '#ff6b2b':'#5c607a', letterSpacing:'0.12em', marginBottom:'0.35rem' }}>{m.year}</div>
+                  <div style={{ fontWeight:700, fontSize:'0.95rem', color:'#e8e4d8', marginBottom:'0.15rem' }}>{m.title}</div>
+                  <div className="font-mono" style={{ fontSize:'0.62rem', color:'#5c607a' }}>{m.sub}</div>
+                  {active===i && (
+                    <p style={{ marginTop:'0.8rem', fontSize:'0.83rem', color:'#5c607a', lineHeight:1.65, borderTop:'1px solid #1e2240', paddingTop:'0.8rem' }}>{m.desc}</p>
                   )}
                 </div>
               ))}
@@ -113,6 +103,8 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      <style>{`@media(max-width:768px){#about > div > div[style*="grid"]{grid-template-columns:1fr !important;gap:3rem !important}}`}</style>
     </section>
   );
 };

@@ -1,96 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+const Navbar=()=>{
+  const [open,setOpen]=useState(false);
+  const [scrolled,setScrolled]=useState(false);
+  const [active,setActive]=useState('home');
+  const [progress,setProgress]=useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'about', 'projects', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
+  useEffect(()=>{
+    const onScroll=()=>{
+      setScrolled(window.scrollY>60);
+      const total=document.body.scrollHeight-window.innerHeight;
+      setProgress(total>0?(window.scrollY/total)*100:0);
+      const sections=['home','about','projects','skills','contact'];
+      const pos=window.scrollY+120;
+      for(let i=sections.length-1;i>=0;i--){
+        const el=document.getElementById(sections[i]);
+        if(el&&el.offsetTop<=pos){setActive(sections[i]);break;}
       }
     };
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('scroll',onScroll);
+    return()=>window.removeEventListener('scroll',onScroll);
+  },[]);
 
-  const navLinks = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'About', href: '#about', id: 'about' },
-    { name: 'Work', href: '#projects', id: 'projects' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
-  ];
+  const links=[{label:'Home',id:'home'},{label:'About',id:'about'},{label:'Work',id:'projects'},{label:'Skills',id:'skills'},{label:'Contact',id:'contact'}];
 
-  return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-sm border-b border-amber-700/30">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <a href="#home" className="text-2xl font-bold text-amber-500 hover:text-amber-400 transition-all font-serif tracking-tight">
-            Dev Parmar
-          </a>
+  return(
+    <>
+      {/* Scroll progress bar */}
+      <div style={{position:'fixed',top:0,left:0,height:2,zIndex:200,background:'linear-gradient(90deg,#ff6b2b,#7c5cff)',width:`${progress}%`,transition:'width 0.1s linear'}}/>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-12">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className={`font-medium transition-colors duration-200 text-sm tracking-wider uppercase ${
-                  activeSection === link.id
-                    ? 'text-amber-500'
-                    : 'text-gray-300 hover:text-amber-500'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
+      <nav style={{
+        position:'fixed',top:0,left:0,right:0,zIndex:100,
+        padding:'1.1rem 2.5rem',
+        display:'flex',alignItems:'center',justifyContent:'space-between',
+        background:scrolled?'rgba(7,8,15,0.92)':'transparent',
+        backdropFilter:scrolled?'blur(20px)':'none',
+        borderBottom:scrolled?'1px solid #1e2240':'1px solid transparent',
+        transition:'all 0.4s',
+      }}>
+        <a href="#home" className="font-mono" style={{fontSize:'0.78rem',color:'#ff6b2b',letterSpacing:'0.1em',textDecoration:'none',fontWeight:700}}>
+          // dev.parmar
+        </a>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-gray-100 hover:text-amber-500 transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+        <div style={{display:'flex',gap:'2.5rem'}} className="hidden md:flex">
+          {links.map(l=>(
+            <a key={l.id} href={`#${l.id}`} className="hover-line"
+              style={{fontFamily:'Space Grotesk, sans-serif',fontSize:'0.75rem',fontWeight:600,letterSpacing:'0.12em',textTransform:'uppercase',textDecoration:'none',color:active===l.id?'#ff6b2b':'#5c607a',transition:'color 0.2s'}}>
+              {l.label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-3 border-t border-amber-700/30 pt-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className={`block font-medium transition-colors duration-200 text-sm tracking-wider uppercase ${
-                  activeSection === link.id
-                    ? 'text-amber-500'
-                    : 'text-gray-300 hover:text-amber-500'
-                }`}
-                onClick={() => {
-                  setActiveSection(link.id);
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                {link.name}
+        <button onClick={()=>setOpen(!open)} className="md:hidden" style={{background:'none',border:'none',color:'#e8e4d8'}}>
+          {open?<X size={22}/>:<Menu size={22}/>}
+        </button>
+
+        {open&&(
+          <div style={{position:'absolute',top:'100%',left:0,right:0,background:'rgba(7,8,15,0.98)',borderBottom:'1px solid #1e2240',padding:'1.5rem 2.5rem',display:'flex',flexDirection:'column',gap:'1.25rem'}}>
+            {links.map(l=>(
+              <a key={l.id} href={`#${l.id}`} onClick={()=>setOpen(false)}
+                style={{fontFamily:'Space Grotesk, sans-serif',fontSize:'0.85rem',fontWeight:600,letterSpacing:'0.1em',textTransform:'uppercase',textDecoration:'none',color:active===l.id?'#ff6b2b':'#e8e4d8'}}>
+                {l.label}
               </a>
             ))}
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 };
 

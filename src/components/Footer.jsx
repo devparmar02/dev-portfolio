@@ -1,26 +1,22 @@
 import React from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
-const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  const footerRef = useScrollAnimation({ threshold: 0.3 });
-
-  return (
-    <footer ref={footerRef} className="bg-gradient-to-r from-slate-950 to-slate-900 border-t border-amber-700/20 py-12 px-6 relative overflow-hidden">
-      {/* Subtle background */}
-      <div className="absolute inset-0 -z-10 opacity-50" style={{backgroundImage: 'radial-gradient(rgba(217,119,6,0.05) 1px, transparent 1px)', backgroundSize: '50px 50px'}}></div>
-      
-      <div className="max-w-5xl mx-auto text-center">
-        <p className="text-gray-400 mb-2 animate-fadeInUp">
-          © {currentYear} Dev Parmar. All rights reserved.
-        </p>
-        <p className="text-gray-500 text-sm animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-          Built with <span className="text-amber-500 font-semibold">React</span>, <span className="text-amber-500 font-semibold">Vite</span>, and <span className="text-amber-500 font-semibold">Tailwind CSS</span>
-        </p>
-      </div>
-    </footer>
-  );
-};
+const Footer=()=>(
+  <footer style={{borderTop:'1px solid #1e2240',padding:'2rem 2.5rem',display:'flex',alignItems:'center',justifyContent:'space-between',background:'#07080f',flexWrap:'wrap',gap:'1rem',position:'relative',overflow:'hidden'}}>
+    <div style={{position:'absolute',inset:0,background:'linear-gradient(90deg,rgba(255,107,43,0.03),transparent,rgba(124,92,255,0.03))',pointerEvents:'none'}}/>
+    <div className="font-mono" style={{fontSize:'0.68rem',color:'#5c607a',position:'relative',zIndex:1}}>
+      dev.parmar © 2026 — Built with React + Vite + Tailwind
+    </div>
+    <div style={{display:'flex',gap:'1.5rem',position:'relative',zIndex:1}}>
+      {[{icon:<FaGithub/>,href:'https://github.com/devparmar02',label:'GitHub'},{icon:<FaLinkedin/>,href:'https://www.linkedin.com/in/dev-parmar/',label:'LinkedIn'},{icon:<FaEnvelope/>,href:'mailto:devparmar2207@gmail.com',label:'Email'}].map(s=>(
+        <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" title={s.label}
+          style={{color:'#5c607a',fontSize:'1.05rem',textDecoration:'none',transition:'all 0.2s'}}
+          onMouseEnter={e=>{e.currentTarget.style.color='#ff6b2b';e.currentTarget.style.transform='translateY(-3px)';}}
+          onMouseLeave={e=>{e.currentTarget.style.color='#5c607a';e.currentTarget.style.transform='';}}
+        >{s.icon}</a>
+      ))}
+    </div>
+  </footer>
+);
 
 export default Footer;
-

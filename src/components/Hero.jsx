@@ -1,93 +1,136 @@
-import React from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Hero = () => {
+  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    const fn = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  const parallax = scrollY * 0.4;
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden pt-24">
-      {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
-        
-        {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-500/30 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div className="absolute top-40 right-10 w-72 h-72 bg-amber-600/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-amber-700/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+    <section id="home" style={{
+      minHeight: '100vh', position: 'relative', overflow: 'hidden',
+      display: 'flex', alignItems: 'center',
+    }}>
+      {/* Animated bg orbs */}
+      <div style={{ position:'absolute', inset:0, zIndex:0 }}>
+        <div className="bg-dots" style={{ position:'absolute', inset:0, opacity:0.6 }} />
+        <div style={{
+          position:'absolute', top:'15%', right:'-5%',
+          width:700, height:700, borderRadius:'50%',
+          background:'radial-gradient(circle, rgba(124,92,255,0.12) 0%, transparent 65%)',
+          transform:`translateY(${-parallax * 0.5}px)`,
+          transition:'transform 0.1s linear'
+        }} />
+        <div style={{
+          position:'absolute', bottom:'-10%', left:'-8%',
+          width:600, height:600, borderRadius:'50%',
+          background:'radial-gradient(circle, rgba(255,107,43,0.1) 0%, transparent 65%)',
+          transform:`translateY(${parallax * 0.3}px)`,
+        }} />
+        <div style={{
+          position:'absolute', top:'50%', left:'40%',
+          width:300, height:300, borderRadius:'50%',
+          background:'radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 65%)',
+        }} />
       </div>
 
-      {/* Grid background pattern */}
-      <div className="absolute inset-0 -z-10 opacity-10" style={{backgroundImage: 'linear-gradient(rgba(217,119,6,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(217,119,6,0.1) 1px, transparent 1px)', backgroundSize: '50px 50px'}}></div>
-      
-      <div className="max-w-4xl w-full z-10 text-center">
-        
-        {/* Floating accent box */}
-        <div className="mb-12 animate-fadeInUp">
-          <div className="inline-block px-6 py-2 rounded-full border border-amber-500/50 bg-amber-500/10 backdrop-blur-sm mb-8 scale-in">
-            <p className="text-amber-400 text-sm font-semibold tracking-widest uppercase">Welcome to my portfolio</p>
+      <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 2.5rem', paddingTop:'6rem', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'4rem', alignItems:'center', width:'100%', position:'relative', zIndex:2 }}>
+        {/* Left */}
+        <div>
+          <div className="hu1 font-mono" style={{ fontSize:'0.65rem', color:'#ff6b2b', letterSpacing:'0.25em', textTransform:'uppercase', marginBottom:'2rem', display:'flex', alignItems:'center', gap:'0.75rem' }}>
+            <span style={{ width:32, height:1, background:'#ff6b2b', display:'inline-block' }} />
+            Available · Full Stack Developer
+          </div>
+
+          <h1 className="hu2" style={{ fontFamily:'Playfair Display, serif', fontWeight:900, lineHeight:0.9, letterSpacing:'-0.02em', fontSize:'clamp(4rem,8.5vw,9rem)', marginBottom:'1.75rem' }}>
+            Dev<br />
+            <span style={{ fontStyle:'italic', background:'linear-gradient(135deg, #ff6b2b, #f5c842)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
+              Parmar.
+            </span>
+          </h1>
+
+          <p className="hu3" style={{ fontSize:'1rem', color:'#5c607a', lineHeight:1.8, maxWidth:440, marginBottom:'2.5rem' }}>
+            I build <strong style={{ color:'#e8e4d8' }}>scalable, beautiful full-stack apps</strong> — from MERN platforms to AI-powered tools — with sharp attention to UX and code quality.
+          </p>
+
+          <div className="hu4" style={{ display:'flex', gap:'1rem', flexWrap:'wrap', marginBottom:'3.5rem' }}>
+            <a href="#projects"
+              style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', padding:'0.9rem 2.2rem', background:'#ff6b2b', color:'#07080f', fontFamily:'Space Grotesk, sans-serif', fontWeight:700, fontSize:'0.78rem', letterSpacing:'0.08em', textTransform:'uppercase', textDecoration:'none', transition:'all 0.25s' }}
+              className="glow-pulse"
+              onMouseEnter={e => { e.currentTarget.style.transform='translate(-3px,-3px)'; e.currentTarget.style.boxShadow='6px 6px 0 #7c5cff'; }}
+              onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow=''; }}>
+              View Work →
+            </a>
+            <a href="/resume.pdf" download
+              style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', padding:'0.9rem 2.2rem', background:'transparent', color:'#e8e4d8', fontFamily:'Space Grotesk, sans-serif', fontWeight:600, fontSize:'0.78rem', letterSpacing:'0.08em', textTransform:'uppercase', textDecoration:'none', border:'1px solid #1e2240', transition:'all 0.25s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(255,107,43,0.5)'; e.currentTarget.style.color='#ff6b2b'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor='#1e2240'; e.currentTarget.style.color='#e8e4d8'; }}>
+              Download CV
+            </a>
+          </div>
+
+          <div className="hu5" style={{ display:'flex', gap:'2.5rem' }}>
+            {[['MERN','Stack'],['6+','Projects'],['B.Tech','IT 2027']].map(([n,l]) => (
+              <div key={l}>
+                <div style={{ fontFamily:'Playfair Display, serif', fontWeight:700, fontSize:'1.6rem', background:'linear-gradient(135deg,#ff6b2b,#f5c842)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text', lineHeight:1 }}>{n}</div>
+                <div className="font-mono" style={{ fontSize:'0.58rem', color:'#5c607a', letterSpacing:'0.18em', textTransform:'uppercase', marginTop:'0.3rem' }}>{l}</div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Profile Image */}
-        <div className="mb-12 animate-fadeInUp delay-100 flex justify-center">
-          <div className="relative w-40 h-40 md:w-56 md:h-56 lg:w-64 lg:h-64">
-            {/* Glowing border effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 rounded-full p-1 glow-pulse -z-10"></div>
-            
-            {/* Image container */}
-            <img 
-              src="/image.png" 
-              alt="Dev Parmar" 
-              className="w-full h-full rounded-full object-cover border-4 border-slate-950 shadow-2xl shadow-amber-500/50 hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        </div>
-
-        {/* Main Heading with animations */}
-        <h1 className="text-7xl md:text-8xl font-bold leading-tight mb-6 animate-fadeInUp font-serif text-white tracking-tight delay-200">
-          <span className="inline-block">Dev</span>
-          <span className="inline-block ml-4 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 bg-clip-text text-transparent animate-pulse">Parmar</span>
-        </h1>
-        
-        {/* Subtitle with animation */}
-        <p className="text-2xl md:text-3xl text-amber-500 font-light mb-8 animate-fadeInUp delay-300 tracking-wide">
-          Full Stack Developer & Creative Problem Solver
-        </p>
-
-        {/* Description with staggered animation */}
-        <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed animate-fadeInUp delay-400 font-light">
-          I build robust web applications and explore the intersection of design and technology. Passionate about clean code, user experience, and solving real-world problems.
-        </p>
-
-        {/* CTA Buttons with enhanced styling */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center animate-fadeInUp delay-500">
-          <a 
-            href="#projects" 
-            className="px-10 py-4 text-lg font-semibold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 transition-all duration-300 font-semibold tracking-wide uppercase rounded-lg shadow-lg shadow-amber-500/50 hover:shadow-amber-400/70 hover:scale-105 transform"
-          >
-            View My Work
-          </a>
-          
-          <a 
-            href="/resume.pdf" 
-            download="Dev_Parmar_Resume.pdf"
-            className="px-10 py-4 text-lg font-semibold text-amber-400 border-2 border-amber-500 hover:bg-amber-500/10 hover:text-amber-300 transition-all duration-300 tracking-wide uppercase rounded-lg backdrop-blur-sm hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105 transform"
-          >
-            Download CV
-          </a>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="mt-20 animate-bounce">
-          <p className="text-gray-500 text-sm mb-3 tracking-widest uppercase">Scroll to explore</p>
-          <div className="flex justify-center">
-            <svg className="w-6 h-6 text-amber-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+        {/* Right – visual card */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <div style={{ position:'relative', width:340, height:420 }}>
+            <div className="spin-slow" style={{
+              position:'absolute', top:'-20%', left:'-20%', width:'140%', height:'140%',
+              background:'conic-gradient(from 0deg, transparent 0%, rgba(255,107,43,0.08) 20%, transparent 40%, rgba(124,92,255,0.08) 60%, transparent 80%)',
+              borderRadius:'50%'
+            }} />
+            {/* Card */}
+            <div style={{
+              position:'absolute', inset:0,
+              background:'linear-gradient(145deg, #12152a, #0e1020)',
+              border:'1px solid #1e2240',
+              overflow:'hidden'
+            }}>
+              <div className="stripe-bg" style={{ position:'absolute', inset:0, opacity:0.6 }} />
+              {/* Top accent bar */}
+              <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:'linear-gradient(90deg,#ff6b2b,#7c5cff)' }} />
+              {/* Profile */}
+              <div style={{ position:'absolute', top:'1.75rem', left:'50%', transform:'translateX(-50%)', width:96, height:96, borderRadius:'50%', border:'2px solid #ff6b2b', overflow:'hidden', background:'#1e2240' }}>
+                <img src="/image.png" alt="Dev Parmar" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+              </div>
+              {/* Code */}
+              <div style={{ position:'absolute', bottom:'1.5rem', left:'1.5rem', right:'1.5rem', fontFamily:'Space Mono, monospace', fontSize:'0.6rem', lineHeight:2, color:'#5c607a' }}>
+                <div><span style={{color:'#7c5cff'}}>const</span> dev = {'{'}</div>
+                <div>&nbsp; name: <span style={{color:'#ff6b2b'}}>"Dev Parmar"</span>,</div>
+                <div>&nbsp; stack: <span style={{color:'#f5c842'}}>"MERN"</span>,</div>
+                <div>&nbsp; open: <span style={{color:'#7c5cff'}}>true</span></div>
+                <div>{'}'}</div>
+              </div>
+            </div>
+            {/* Tags */}
+            <div className="float1" style={{ position:'absolute', top:-16, right:20, background:'#ff6b2b', color:'#07080f', fontFamily:'Space Mono, monospace', fontSize:'0.6rem', padding:'0.3rem 0.75rem', letterSpacing:'0.06em', fontWeight:700 }}>Full Stack ⚡</div>
+            <div className="float2" style={{ position:'absolute', left:-20, top:'38%', background:'#7c5cff', color:'#fff', fontFamily:'Space Mono, monospace', fontSize:'0.6rem', padding:'0.3rem 0.75rem', letterSpacing:'0.06em' }}>Open to Work</div>
+            <div className="float3" style={{ position:'absolute', bottom:-16, left:30, background:'#12152a', color:'#5c607a', fontFamily:'Space Mono, monospace', fontSize:'0.6rem', padding:'0.3rem 0.75rem', letterSpacing:'0.06em', border:'1px solid #1e2240' }}>Vadodara, IN</div>
           </div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <div className="scroll-bounce" style={{ position:'absolute', bottom:'2rem', left:'50%', display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}>
+        <div style={{ width:1, height:52, background:'linear-gradient(to bottom, transparent, #5c607a)' }} />
+        <span className="font-mono" style={{ fontSize:'0.58rem', color:'#5c607a', letterSpacing:'0.18em', textTransform:'uppercase' }}>scroll</span>
+      </div>
+
+      <style>{`@media(max-width:900px){#home>div{grid-template-columns:1fr !important}#home>div>div:last-child{display:none !important}}`}</style>
     </section>
   );
 };
 
 export default Hero;
-
