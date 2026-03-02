@@ -65,7 +65,7 @@ const Hero = () => {
               onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow=''; }}>
               View Work →
             </a>
-            <a href="resume.pdf" download
+            <a href="https://github.com/devparmar02/dev-portfolio/blob/c55d6c72ccd2e167f817cf0a21578f9b8803886f/resume.pdf" download
               style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', padding:'0.9rem 2.2rem', background:'transparent', color:'#e8e4d8', fontFamily:'Space Grotesk, sans-serif', fontWeight:600, fontSize:'0.78rem', letterSpacing:'0.08em', textTransform:'uppercase', textDecoration:'none', border:'1px solid #1e2240', transition:'all 0.25s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(255,107,43,0.5)'; e.currentTarget.style.color='#ff6b2b'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor='#1e2240'; e.currentTarget.style.color='#e8e4d8'; }}>
