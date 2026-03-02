@@ -65,7 +65,7 @@ const Hero = () => {
               onMouseLeave={e => { e.currentTarget.style.transform=''; e.currentTarget.style.boxShadow=''; }}>
               View Work →
             </a>
-            <a href="https://github.com/devparmar02/dev-portfolio/blob/c55d6c72ccd2e167f817cf0a21578f9b8803886f/resume.pdf" download
+            <a href="/resume.pdf" download
               style={{ display:'inline-flex', alignItems:'center', gap:'0.6rem', padding:'0.9rem 2.2rem', background:'transparent', color:'#e8e4d8', fontFamily:'Space Grotesk, sans-serif', fontWeight:600, fontSize:'0.78rem', letterSpacing:'0.08em', textTransform:'uppercase', textDecoration:'none', border:'1px solid #1e2240', transition:'all 0.25s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor='rgba(255,107,43,0.5)'; e.currentTarget.style.color='#ff6b2b'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor='#1e2240'; e.currentTarget.style.color='#e8e4d8'; }}>
@@ -103,7 +103,7 @@ const Hero = () => {
               <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:'linear-gradient(90deg,#ff6b2b,#7c5cff)' }} />
               {/* Profile */}
               <div style={{ position:'absolute', top:'1.75rem', left:'50%', transform:'translateX(-50%)', width:96, height:96, borderRadius:'50%', border:'2px solid #ff6b2b', overflow:'hidden', background:'#1e2240' }}>
-                <img src="image.png" alt="Dev Parmar" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+                <img src="/image.png" alt="Dev Parmar" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
               </div>
               {/* Code */}
               <div style={{ position:'absolute', bottom:'1.5rem', left:'1.5rem', right:'1.5rem', fontFamily:'Space Mono, monospace', fontSize:'0.6rem', lineHeight:2, color:'#5c607a' }}>
