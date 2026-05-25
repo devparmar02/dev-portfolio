@@ -60,8 +60,8 @@ const projects = [
       { icon: <SiTailwindcss />, color: '#38bdf8', label: 'Tailwind' },
     ],
 
-    github: 'https://github.com/devparmar02/tripmind',
-    demo: 'https://tripmind.vercel.app/',
+    github: 'https://github.com/devparmar02/ai-tarvel-itinerary-',
+    demo: 'https://trip-mind-eight.vercel.app/',
     accent: '#00c2a8',
   },
 
