@@ -101,10 +101,12 @@ const Hero = () => {
               <div className="stripe-bg" style={{ position:'absolute', inset:0, opacity:0.6 }} />
               {/* Top accent bar */}
               <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background:'linear-gradient(90deg,#ff6b2b,#7c5cff)' }} />
-              {/* Profile */}
-              <div style={{ position:'absolute', top:'1.75rem', left:'50%', transform:'translateX(-50%)', width:96, height:96, borderRadius:'50%', border:'2px solid #ff6b2b', overflow:'hidden', background:'#1e2240' }}>
+              
+              {/* Profile - Size updated to 160 */}
+              <div style={{ position:'absolute', top:'1.75rem', left:'50%', transform:'translateX(-50%)', width:160, height:160, borderRadius:'50%', border:'2px solid #ff6b2b', overflow:'hidden', background:'#1e2240' }}>
                 <img src="/image.png" alt="Dev Parmar" style={{ width:'100%', height:'100%', objectFit:'cover' }} />
               </div>
+
               {/* Code */}
               <div style={{ position:'absolute', bottom:'1.5rem', left:'1.5rem', right:'1.5rem', fontFamily:'Space Mono, monospace', fontSize:'0.6rem', lineHeight:2, color:'#5c607a' }}>
                 <div><span style={{color:'#7c5cff'}}>const</span> dev = {'{'}</div>
