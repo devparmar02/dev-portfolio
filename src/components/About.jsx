@@ -4,7 +4,7 @@ const milestones = [
   { id:0, year:'2019', title:'Secondary School (10th)', sub:'State Board', desc:'Built strong foundations in Science and Mathematics.' },
   { id:1, year:'2021', title:'Higher Secondary (12th)', sub:'Science Stream', desc:'Specialized in Physics, Chemistry, and Mathematics.' },
   { id:2, year:'2027', title:'B.Tech Information Technology', sub:'ITM SLS Baroda University', desc:'Pursuing degree with focus on Full Stack Development and emerging technologies.' },
-  { id:3, year:'Now', title:'Internship & Projects', sub:'Building production-grade apps', desc:'Developing real-world applications and expanding professional experience.' },
+  { id:3, year:'Now', title:'Internship & Projects', sub:'Allianz Cloud Pvt Ltd', desc:'Working as a Full Stack Developer to build production-grade apps and expand professional experience.' },
 ];
 
 const useInView = (opts = {}) => {
@@ -20,7 +20,7 @@ const useInView = (opts = {}) => {
 };
 
 const About = () => {
-  const [active, setActive] = useState(2);
+  const [active, setActive] = useState(3); // Changed default active to 3 (Now) for better initial visibility of your current role, change back to 2 if preferred
   const h = useInView();
   const left = useInView({ cls:'visible' });
   const right = useInView({ cls:'visible' });
@@ -56,9 +56,9 @@ const About = () => {
               <div style={{ width:40, height:1, background:'#ff6b2b' }} />
             </div>
             {[
-              <>I'm a <strong style={{color:'#e8e4d8'}}>full-stack developer</strong> driven by clean architecture and delightful UX. My journey spans MERN stack apps, AI-powered tools, mobile dev with Kotlin, and data engineering.</>,
-              <>Currently finalizing my B.Tech in IT while shipping production-grade applications that turn complex ideas into working, polished products.</>,
-              <>When not coding, I explore new tech, contribute to open source, and stay sharp on industry trends.</>,
+              <React.Fragment key="bio-1">I'm a <strong style={{color:'#e8e4d8'}}>full-stack developer</strong> driven by clean architecture and delightful UX. My journey spans MERN stack apps, AI-powered tools, mobile dev with Kotlin, and data engineering.</React.Fragment>,
+              <React.Fragment key="bio-2">Currently finalizing my B.Tech in IT while shipping production-grade applications that turn complex ideas into working, polished products.</React.Fragment>,
+              <React.Fragment key="bio-3">When not coding, I explore new tech, contribute to open source, and stay sharp on industry trends.</React.Fragment>,
             ].map((t,i) => (
               <p key={i} style={{ fontSize:'0.93rem', color:'#5c607a', lineHeight:1.85, marginBottom:'1rem' }}>{t}</p>
             ))}
@@ -78,7 +78,7 @@ const About = () => {
                     background: active===i ? '#12152a' : 'transparent',
                     border: active===i ? '1px solid #1e2240' : '1px solid transparent',
                     borderLeft: active===i ? '2px solid #ff6b2b' : '2px solid transparent',
-                    cursor:'none', transition:'all 0.35s',
+                    cursor:'pointer', transition:'all 0.35s', // Changed cursor to 'pointer' for better UX
                     position:'relative'
                   }}>
                   {/* Dot */}
